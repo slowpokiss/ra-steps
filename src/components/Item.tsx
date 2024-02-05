@@ -1,22 +1,17 @@
-
-
 interface props {
-  items: { time: number, distance: number}[]
-  //onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+  items: { time: string, distance: number}[]
   onClick: (index: number) => void;
- // onClick: () => {}
 }
 
 export default function Item({ items, onClick }: props) {
-  
-  // const sortedItems = [...items].sort((a, b) => {
-  //   let dateA = a.time.split('.');
-  //   let dateB = b.time.split('.');
-  //   return new Date(dateB[2], dateB[1], dateB[0]) - new Date
-  // });
+  const sortedItems = [...items].sort((a, b) => {
+    const dateA = new Date(...a.time.split(".").reverse().map(Number));
+    const dateB = new Date(...b.time.split(".").reverse().map(Number));
+    return dateA - dateB;
+  });
   
   return (
-    items.map((el, ind) => (
+    sortedItems.map((el, ind) => (
       <div className="form-item" key={ind}>
         <div className="item-time">{el.time}</div>
         <div className="item-distance">{el.distance}</div>
